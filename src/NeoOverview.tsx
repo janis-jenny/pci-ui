@@ -10,12 +10,12 @@ const NeoOverview = (): JSX.Element => {
   const columnDefs: ColDef[] = useMemo(() => [
     { field: "designation", headerName: "Designation", filter: 'agTextColumnFilter', sortable: true },
     { field: "discovery_date", headerName: "Discovery Date", filter: 'agDateColumnFilter', sortable: true },
-    { field: "h_mag", headerName: "H (mag)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), },
-    { field: "moid_au", headerName: "MOID (au)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue),},
-    { field: "q_au_1", headerName: "q (au)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue),},
-    { field: "q_au_2", headerName: "Q (au)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue),},
-    { field: "period_yr", headerName: "Period (yr)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue),},
-    { field: "i_deg", headerName: "Inclination (deg)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue),},
+    { field: "h_mag", headerName: "H (mag)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
+    { field: "moid_au", headerName: "MOID (au)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
+    { field: "q_au_1", headerName: "q (au)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
+    { field: "q_au_2", headerName: "Q (au)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
+    { field: "period_yr", headerName: "Period (yr)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
+    { field: "i_deg", headerName: "Inclination (deg)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
     { field: "pha", headerName: "Potentially Hazardous", filter: 'agTextColumnFilter', sortable: true, },
     { field: "orbit_class", headerName: "Orbit Class", enableRowGroup: true, filter: 'agTextColumnFilter', sortable: true },
   ], []);
