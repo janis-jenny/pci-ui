@@ -11,6 +11,11 @@ const NeoOverview: React.FC = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-GB');
   };
+  const formatPotentiallyHazardous = (value: string): string => {
+    if (value === 'Y') return 'Yes';
+    if (value === 'N') return 'No';
+    return '';
+  };
   const columnDefs: ColDef[] = useMemo(() => [
     { field: "designation", headerName: "Designation", filter: 'agTextColumnFilter', sortable: true },
     { field: "discovery_date", headerName: "Discovery Date", filter: 'agDateColumnFilter', sortable: true,
@@ -37,7 +42,26 @@ const NeoOverview: React.FC = () => {
     { field: "q_au_2", headerName: "Q (au)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
     { field: "period_yr", headerName: "Period (yr)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
     { field: "i_deg", headerName: "Inclination (deg)", filter: 'agNumberColumnFilter', sortable: true, valueParser: (params) => Number(params.newValue), comparator: (valueA, valueB) => valueA - valueB},
-    { field: "pha", headerName: "Potentially Hazardous", filter: 'agTextColumnFilter', sortable: true, },
+    { field: "pha", headerName: "Potentially Hazardous", filter: 'agTextColumnFilter', sortable: true,
+      filterParams: {
+        filterOptions: ['contains', 'notContains', 'equals', 'notEqual'],
+        textCustomComparator: (filter: string, value: any, filterText: string) => {
+          const formattedValue = formatPotentiallyHazardous(value);
+          switch (filter) {
+            case 'contains':
+              return formattedValue.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+            case 'notContains':
+              return formattedValue.toLowerCase().indexOf(filterText.toLowerCase()) === -1;
+            case 'equals':
+              return formattedValue.toLowerCase() === filterText.toLowerCase();
+            case 'notEqual':
+              return formattedValue.toLowerCase() !== filterText.toLowerCase();
+            default:
+              return false;
+          }
+        },
+      },
+      valueFormatter: (params) => formatPotentiallyHazardous(params.value) },
     { field: "orbit_class", headerName: "Orbit Class", enableRowGroup: true, filter: 'agTextColumnFilter', sortable: true },
   ], []);
   return (
