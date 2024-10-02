@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useCallback } from 'react';
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridApi, GridReadyEvent, ColumnApi } from "ag-grid-community";
+import { formatDate, formatPotentiallyHazardous } from './utils/formatters';
 import data from "./near-earth-asteroids.json";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -9,15 +10,7 @@ import './index.css';
 const NeoOverview: React.FC = () => {
   const gridApiRef = useRef<GridApi | null>(null);
   const columnApiRef = useRef<ColumnApi | null>(null);
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB');
-  };
-  const formatPotentiallyHazardous = (value: string): string => {
-    if (value === 'Y') return 'Yes';
-    if (value === 'N') return 'No';
-    return '';
-  };
+  
   const columnDefs: ColDef[] = useMemo(() => [
     { field: "designation", headerName: "Designation", filter: 'agTextColumnFilter', sortable: true },
     { field: "discovery_date", headerName: "Discovery Date", filter: 'agDateColumnFilter', sortable: true,
