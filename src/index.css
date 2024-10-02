@@ -18,3 +18,12 @@ body {
     margin: 0;
     margin-right: 15px;
 }
+
+.ag-theme-alpine {
+  --ag-selected-row-background-color: rgba(0, 0, 255, 0.1);
+}
+
+.ag-theme-alpine .ag-cell {
+  user-select: text;
+  -webkit-user-select: text;
+}

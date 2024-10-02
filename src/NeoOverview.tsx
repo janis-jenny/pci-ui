@@ -64,6 +64,7 @@ const NeoOverview: React.FC = () => {
       valueFormatter: (params) => formatPotentiallyHazardous(params.value) },
     { field: "orbit_class", headerName: "Orbit Class", enableRowGroup: true, filter: 'agTextColumnFilter', sortable: true },
   ], []);
+
   return (
     <div className="neo-overview">
       <header>
@@ -72,9 +73,15 @@ const NeoOverview: React.FC = () => {
       <div className="ag-theme-alpine" style={{ height: 900, width: 1920 }}>
         <AgGridReact
           rowData={data}
-          columnDefs={columnDefs}
+          columnDefs={columnDefs}    
           rowGroupPanelShow={'always'}
-          suppressMultiSort={true}
+         suppressMultiSort={true}
+          enableRangeSelection={true}
+          enableRangeHandle={true}
+          copyHeadersToClipboard={true}
+          suppressCopyRowsToClipboard={false}
+          suppressMultiRangeSelection={false}
+          ensureDomOrder={true}
         />
       </div>
     </div>
